@@ -33,10 +33,4 @@ pipeline {
       }
     }
   }
-  post {
-    success{
-      // send notification
-      echo "all stages in the job pipeline is executed sucesssfully"
-    }
-  }
 }
