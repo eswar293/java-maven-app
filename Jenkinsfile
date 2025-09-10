@@ -23,14 +23,13 @@ pipeline {
       }
     }
     stage ("test") {
-      
-      steps {
-        script {
           when {
         expression {
           params.executeTests
         }
       }
+      steps {
+        script {
           gv.testapp()
         }
       }
