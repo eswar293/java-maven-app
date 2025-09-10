@@ -18,7 +18,7 @@ pipeline {
                 script {
                     echo " buiding the docker image ..."
                     withCredentials([usernamePassword(credentialsId: 'docker_registry', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
-                        sh "docker build -t eswar1241/demoapp:jma-1.2.0 ."
+                        sh "docker build -t eswar1241/demoapp:jma-1.2 ."
                         sh "echo $PASS |docker login -u $USER --password-stdin"
                         sh "docker push eswar1241/demoapp:jwa-1.2.0"
                     }
