@@ -3,12 +3,13 @@ def buildapp() {
 }
 
 def testapp() {
-    echo "Testing the Application"
+    
     when {
         expression {
           params.executeTests
         }
       }
+    echo "Testing the Application"
     
 }
 
