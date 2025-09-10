@@ -2,7 +2,7 @@ pipeline {
   agent any
   parameters {
     choice (name: "VERSION", choices: ['1.0.0', '1.2.0', '1.3.0'], description: "")
-    booleanparam(name : 'executeTests', defaultvalue: true, descripton:"")
+    booleanParam(name : 'executeTests', defaultvalue: true, descripton:"")
   }
 
   stages {
