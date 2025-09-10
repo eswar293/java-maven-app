@@ -35,8 +35,8 @@ pipeline {
   }
   post {
     success{
-      // send mail to team
-      echo "all stages in the job pipeline is executed sucesssfully" | mail -s "sucessfully executed" eswarpkumar@gmail.com
+      // send notification
+      echo "all stages in the job pipeline is executed sucesssfully"
     }
   }
 }
