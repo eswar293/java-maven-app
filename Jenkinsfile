@@ -29,8 +29,14 @@ pipeline {
       
         steps {
             echo "deploying the application"
-            echo "deploying version ${params.version}"
+            echo "deploying version ${params.VERSION}"
       }
+    }
+  }
+  post {
+    success{
+      // send mail to team
+      echo "all stages in the job pipeline is executed sucesssfully" | mail -s "sucessfully executed" eswarpkumar@gmail.com
     }
   }
 }
