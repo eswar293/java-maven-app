@@ -4,11 +4,6 @@ def buildapp() {
 
 def testapp() {
     
-    when {
-        expression {
-          params.executeTests
-        }
-      }
     echo "Testing the Application"
     
 }
