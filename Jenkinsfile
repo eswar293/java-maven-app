@@ -15,7 +15,6 @@ pipeline {
         }
       }
     }
-
     stage ("build") {
       steps {
         script {
@@ -23,7 +22,6 @@ pipeline {
         }
       }
     }
-
     stage ("test") {
       when {
         expression {
@@ -36,14 +34,12 @@ pipeline {
         }
       }
     }
-
     stage ("deploy") {
       
       steps {
         script {
           gv.deployApp
         }
-        
       }
     }
   }
