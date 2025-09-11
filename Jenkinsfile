@@ -9,7 +9,6 @@ pipeline {
             steps {
                 script {
                     echo "Building the jar package ..."
-                    sh "maven clean package"
                     sh "maven package"
 
                 }
