@@ -22,9 +22,9 @@ pipeline {
             steps {
                 script {
                     echo " buiding the docker image ..."
-                    withCredentials([usernamePassword(credentialsID: 'Docker_Repo', passwordVariable: 'PASS', usernameVariable: 'USER')])
+                    withCredentials([usernamePassword(credentialsID: 'docker_registry', passwordVariable: 'PASS', usernameVariable: 'USER')])
                     sh "docker build -t eswar1241/demoapp:jma-1.2.0 ."
-                    sh "echo $PASS |docker login -u $USER --password-stdin"
+                    sh "echo ${PASS} |docker login -u ${USER} -- password-stdin "
                     sh "docker push eswar1241/demoapp:jwa-1.2.0"
                 }
             }
