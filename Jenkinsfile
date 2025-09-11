@@ -3,34 +3,37 @@ pipeline {
     tools {
         maven "maven3.9"
     }
-    
+
     stages {
-        stage ("built jar") {
+        stage ("build jar") {
             steps {
                 script {
-                    echo " buiding the application ..."
-                    sh "mvn clean package"
-                    sh "mvn package"
+                    echo "Building the jar package ..."
+                    sh "maven clean package"
+                    sh "maven package"
+
                 }
             }
         }
-        stage ("built docker iamge") {
+        stage ("build docker image") {
             steps {
                 script {
-                    echo " buiding the docker image ..."
+                    echo "Building the docker iamge ..."
                     withCredentials([usernamePassword(credentialsId: 'Docker_Repo', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
                         sh 'docker build -t eswar1241/my-repo:jma-1.0 .'
                         sh 'echo $PASS | docker login -u $USER --password-stdin'
                         sh 'docker push eswar1241/my-repo:jma-1.0'
                     }
 
+                }
             }
         }
-        stage ("deploy") {
+        stage ("Deploying Appliction") {
             steps {
-                echo " Deploying the application ..."
+                script {
+                    echo "Deploying the application ..."
+                }
             }
         }
     }
-}
 }
