@@ -1,3 +1,5 @@
+def gv
+
 pipeline {
     agent any
     tools {
@@ -5,23 +7,24 @@ pipeline {
     }
 
     stages {
+        stage ("init") {
+            steps. {
+                script {
+                    gv = load "script.groovy"
+                }
+            }
+        }
         stage ("build jar") {
             steps {
                 script {
-                    echo "Building the jar package ..."
-                    sh "mvn package"
-
+                    gv.buildjar ()
                 }
             }
         }
         stage ("build docker image") {
             steps {
                 script {
-                    echo "Building the docker iamge ..."
-                    withCredentials([usernamePassword(credentialsId: 'Docker_Repo', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
-                        sh 'docker build -t eswar1241/my-repo:jma-1.0 .'
-                        sh 'echo $PASS | docker login -u $USER --password-stdin'
-                        sh 'docker push eswar1241/my-repo:jma-1.0'
+                    gv.buildDockerImage()
                     }
 
                 }
@@ -30,7 +33,7 @@ pipeline {
         stage ("Deploying Appliction") {
             steps {
                 script {
-                    echo "Deploying the application ..."
+                    gv.deployApp()
                 }
             }
         }
