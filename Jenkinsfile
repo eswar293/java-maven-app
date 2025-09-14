@@ -23,6 +23,9 @@ pipeline {
                 }
             }
         }
+        
+        
+        
         stage ("build docker image") {
             steps {
                 script {
@@ -31,6 +34,8 @@ pipeline {
 
             }
         }
+
+        
         stage ("Deploying Appliction") {
             steps {
                 script {
