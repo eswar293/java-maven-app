@@ -6,7 +6,7 @@ def buildjar() {
 def buildDockerImage() {
 echo "Building the docker iamge ..."
     withCredentials([usernamePassword(credentialsId: 'eswar1241/my-repo', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
-        sh 'docker build -t eswar1241/my-repo:jma-1.0 .'
+        sh 'docker build -t eswar1241/my-repo:jma-3.0 .'
         sh 'echo $PASS | docker login -u $USER --password-stdin'
         sh 'docker push eswar1241/my-repo:jma-1.0'
     }
