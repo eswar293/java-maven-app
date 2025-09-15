@@ -5,7 +5,6 @@ pipeline {
     tools {
         maven "maven3.9"
     }
-
     stages {
         stage ("init") {
             steps {
@@ -13,19 +12,14 @@ pipeline {
                     gv = load "script.groovy"
                 }
             }
-        }
-
-        
+        }       
         stage ("build jar") {
             steps {
                 script {
                     gv.buildjar ()
                 }
             }
-        }
-        
-        
-        
+        }        
         stage ("build docker image") {
             steps {
                 script {
@@ -34,8 +28,6 @@ pipeline {
 
             }
         }
-
-        
         stage ("Deploying Appliction") {
             steps {
                 script {
