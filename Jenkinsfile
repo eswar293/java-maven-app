@@ -10,7 +10,7 @@ pipeline {
                 script {
                     echo "Incrementing the app version"
                     sh "mvn build-helper:parse-version versions:set \
-                        -DnewVersion=\\\${parsedVersion.MajorVersion}.\\\${parsedVersion.MinorVersion}.\\\${parsedVersion.nextIncrementalVersion} versions:commit"
+                        -DnewVersion=\\\${parsedVersion.majorVersion}.\\\${parsedVersion.minorVersion}.\\\${parsedVersion.nextIncrementalVersion} versions:commit"
                     def VERSION = $('mvn help:evaluate -Dexpression=project.version -q -DforceStdout')
                     "echo $VERSION"
 
@@ -22,7 +22,7 @@ pipeline {
             steps {
                 script {
                     echo "Building the app ..."
-                    sh 'mvn clear package'
+                    sh 'mvn package'
                 }
             }
         }
