@@ -1,8 +1,3 @@
-#! /user/bin/env groovy
-
-@Library('Jenkins-shared-library')
-def gv
-
 pipeline {
     agent any
     tools {
@@ -10,32 +5,45 @@ pipeline {
     }
 
     stages {
-        stage ("init") {
+        stage("incrementing the app version") {
             steps {
                 script {
-                    gv = load "script.groovy"
-                }
-            }
-        }
-        stage ("build jar") {
-            steps {
-                script {
-                    buildjar ()
-                }
-            }
-        }
-        stage ("build docker image") {
-            steps {
-                script {
-                    buildImage()
-                }
+                    echo "Incrementing the app version"
+                    sh "mvn build-helper:parse-version versions:set \
+                        -DnewVersion=\\\${parsedVersion.MajorVersion}.\\\${parsedVersion.MinorVersion}.\\\${parsedVersion.nextIncrementalVersion} versions:commit"
+                    def VERSION = $('mvn help:evaluate -Dexpression=project.version -q -DforceStdout')
+                    "echo $VERSION"
 
+                }
             }
         }
-        stage ("Deploying Appliction") {
+
+        stage("Build app") {
             steps {
                 script {
-                    gv.deployApp()
+                    echo "Building the app ..."
+                    sh 'mvn clear package'
+                }
+            }
+        }
+
+        stage("Building Docker Image"){
+            steps{
+                script{
+                    echo "Building the Docker image and pushing it to docker repo"
+                    withCredentials([UsernamePassword(credentialsId: 'Docker_login', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
+                        sh "docker build -t eswar1241/my-repo:$VERSION"
+                        sh 'echo $PASS |docker login -u $USER --password-stdin'
+                        sh "docker push eswar1241/my-repo:$VERSION"
+                    }
+                }
+            }
+        }
+
+        stage("Deploying"){
+            steps{
+                script{
+                    echo "Deploying the application"
                 }
             }
         }
