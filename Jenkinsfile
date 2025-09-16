@@ -11,9 +11,8 @@ pipeline {
                     echo "Incrementing the app version"
                     sh "mvn build-helper:parse-version versions:set \
                         -DnewVersion=\\\${parsedVersion.majorVersion}.\\\${parsedVersion.minorVersion}.\\\${parsedVersion.nextIncrementalVersion} versions:commit"
-                    def VERSION = $('mvn help:evaluate -Dexpression=project.version -q -DforceStdout')
-                    "echo $VERSION"
-
+                    def VERSION = sh(script: "mvn help:evaluate -Dexpression=project.version -q -DforceStdout", returnStdout: true).trim()
+                    echo "Maven Project Version: ${version}"
                 }
             }
         }
